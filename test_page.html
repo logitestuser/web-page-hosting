@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<title>Test_Webpage</title>
+<body>
+
+<script>
+    function launchGoogle(){
+		window.open("https://www.google.com/","_self");
+    }
+	function openImage(){
+		window.open('https://i.imgur.com/pMv3F6f.png', '_self');
+    }
+	function updateValue1() {
+		document.getElementById('text_field1').setAttribute('value', document.getElementById('text_field1').value);
+	}
+	function updateValue2() {
+		document.getElementById('text_field2').setAttribute('value', document.getElementById('text_field2').value);
+	}
+	window.oncontextmenu = function () {
+        document.getElementById("secondaryClick").value = "Secondary Click worked";
+    }
+    document.onclick = function() {myFunction()};
+    function myFunction() {
+        document.getElementById("tapToClick").value = "Tap to Click worked";
+    }
+</script>
+
+<center><h1>Automation Test Webpage</h1></center>
+<center>
+    <table>
+        <tr>
+            <td>
+                <p>
+                <h3>Dropdown Sample: </h3></p>
+            </td>
+            <td>
+                <select id="dropdown">
+                    <option value="">Dropdown1</option>
+                    <option value="">Dropdown2</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3> Enter First String : </h3>
+            </td>
+            <td>
+                <input type="text" id="text_field1" size="15" maxlength="15" value="" onkeyup=updateValue1()>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3> Enter Second String : </h3>
+            </td>
+            <td>
+                <input type="text" id="text_field2" size="15" maxlength="15" value="" onkeyup=updateValue2()>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3> Open new webpage : </h3>
+            </td>
+            <td>
+                <input type="button" id="launch" value="Open" onclick=launchGoogle()>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3> Open a image: </h3>
+            </td>
+            <td>
+                <input type="button" id="openimage" value="Open Image" onclick=openImage()>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Do a Left Click/Tap on touchpad</h3>
+            </td>
+            <td>
+                <input type="text" id="tapToClick" value="">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Do a Right Click on Mouse/Secondary click on touchpad</h3>
+            </td>
+            <td>
+                <input type="text" id="secondaryClick" value="">
+            </td>
+        </tr>
+        <div>
+            <iframe id='video' src="https://www.youtube.com/embed?v=-v4kGQsLZWU&list=PLKPFod6yzh8Rvy8xnk_E34RnrlDZ2gnmz"
+                    width="560" height="315" align="right"></iframe>
+        </div>
+
+    </table>
+</center>
+</body>
+</html>
