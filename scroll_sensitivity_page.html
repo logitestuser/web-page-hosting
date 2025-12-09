@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dialpad Sensitivity Test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      height: 6000px;  /* Enable vertical scrolling */
+      width: 6000px;   /* Enable horizontal scrolling */
+    }
+
+    .floating-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 720px;
+      background: #fff;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      z-index: 1000;
+      border: 1px solid #ddd;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 24px;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border: 1px solid #ccc;
+      text-align: left;
+      vertical-align: middle;
+      word-wrap: break-word;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    td:first-child {
+      width: 50%;
+    }
+
+    td:last-child {
+      width: 50%;
+      text-align: center;
+    }
+
+    tr:hover td {
+      background-color: #f9f9f9;
+    }
+
+    /* Dummy horizontal content (below table, far right) */
+    .dummy-horizontal {
+      position: absolute;
+      top: 600px;  /* approx. below the floating panel */
+      left: 55px;
+      font-size: 18px;
+      color: #555;
+      width: 300px;
+    }
+
+    /* Dummy vertical content (right side of panel) */
+    .dummy-vertical {
+      position: absolute;
+      top: 300px;
+      left: 1000px;
+      font-size: 18px;
+      color: #555;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floating-panel">
+    <h1>Dialpad DIAL and ROLLER buttons Sensitivity Test</h1>
+    <h2>Verifying the Global Sensitivity and Custom Adjustment action specific Test</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id="scrollData">
+        <tr><td>Scroll Position X</td><td>0 px</td></tr>
+        <tr><td>Scroll Position Y</td><td>0 px</td></tr>
+        <tr><td>Scroll Delta X</td><td>0 px</td></tr>
+        <tr><td>Scroll Delta Y</td><td>0 px</td></tr>
+        <tr><td>Mouse Position X</td><td>0 px</td></tr>
+        <tr><td>Mouse Position Y</td><td>0 px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Horizontal Scroll Dummy Content -->
+  <div class="dummy-horizontal">
+    👉 Horizontal scroll test content placed after table.
+  </div>
+
+  <!-- Vertical Scroll Dummy Content -->
+  <div class="dummy-vertical">
+    ⬇️ Vertical scroll test content at bottom right of table.
+  </div>
+
+  <script>
+    let lastX = window.scrollX;
+    let lastY = window.scrollY;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    function updateTable(data) {
+      const scrollData = document.getElementById('scrollData');
+      scrollData.innerHTML = `
+        <tr><td>Scroll Position X</td><td>${data.scrollX} px</td></tr>
+        <tr><td>Scroll Position Y</td><td>${data.scrollY} px</td></tr>
+        <tr><td>Scroll Delta X</td><td>${data.deltaX} px</td></tr>
+        <tr><td>Scroll Delta Y</td><td>${data.deltaY} px</td></tr>
+        <tr><td>Mouse Position X</td><td>${data.mouseX} px</td></tr>
+        <tr><td>Mouse Position Y</td><td>${data.mouseY} px</td></tr>
+      `;
+    }
+
+    window.addEventListener('scroll', () => {
+      const currX = window.scrollX;
+      const currY = window.scrollY;
+      const deltaX = currX - lastX;
+      const deltaY = currY - lastY;
+
+      updateTable({
+        scrollX: currX.toFixed(0),
+        scrollY: currY.toFixed(0),
+        deltaX: deltaX.toFixed(0),
+        deltaY: deltaY.toFixed(0),
+        mouseX: mouseX,
+        mouseY: mouseY
+      });
+
+      lastX = currX;
+      lastY = currY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX + window.scrollX).toFixed(0);
+      mouseY = (e.clientY + window.scrollY).toFixed(0);
+
+      updateTable({
+        scrollX: window.scrollX.toFixed(0),
+        scrollY: window.scrollY.toFixed(0),
+        deltaX: 0,
+        deltaY: 0,
+        mouseX: mouseX,
+        mouseY: mouseY
+      });
+    });
+
+    window.onload = function () {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    };
+  </script>
+
+</body>
+</html>
